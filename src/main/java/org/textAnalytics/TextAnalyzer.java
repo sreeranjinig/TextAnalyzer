@@ -8,13 +8,22 @@ import java.util.stream.Collectors;
 
 public class TextAnalyzer {
 
-    /*
-        Reads file from a path into a String
+     /**
+     *
+     * @param filePath Path of the file that needs to be parsed
+     * @return As string with all file contents
+     * @throws IOException
      */
     public String readFile(String filePath) throws IOException {
         return Files.readString(Path.of(filePath));
     }
 
+     /**
+     *
+     * @param filePath Path of the file that needs to be parsed and read to count exactly how many times each word occurs in that text.
+     * @return Map with each word as key and count as value.
+     * @throws IOException
+     */
 
     public Map<String, Integer> countValidWordsByReadingFile(String filePath) throws IOException {
         Map<String, Integer> wordFrequencyMap = new HashMap<>();
@@ -24,7 +33,7 @@ public class TextAnalyzer {
             return wordFrequencyMap;
         }
 
-       Arrays.stream(fileContent.trim().toLowerCase().split("\\s+"))
+       Arrays.stream(fileContent.replaceAll("\\.", " ").trim().toLowerCase().split("\\s+"))
                .filter(words ->!words.isBlank())
                .forEach(word -> wordFrequencyMap.put(word, wordFrequencyMap.getOrDefault(word, 0)+1));
 
